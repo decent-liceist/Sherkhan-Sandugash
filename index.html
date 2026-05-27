@@ -591,6 +591,34 @@ footer .foot-year {
   #hero .frame { padding: 48px 24px; }
 }
 
+/* ---------- Wedding Hosts block ---------- */
+.hosts-section {
+  background: var(--paper);
+  color: var(--ink-on-light);
+}
+.hosts-oval {
+  border: 2px solid var(--petal);
+  border-radius: 50%;
+  padding: 52px 64px;
+  display: inline-block;
+  text-align: center;
+  margin-top: 12px;
+}
+.hosts-label {
+  font-family: 'Pinyon Script', cursive;
+  font-size: clamp(32px, 9vw, 52px);
+  color: var(--petal);
+  line-height: 1.2;
+}
+.hosts-names {
+  font-family: 'Cormorant', serif;
+  letter-spacing: 0.25em;
+  font-size: clamp(16px, 4vw, 22px);
+  color: var(--ink-on-light);
+  text-transform: uppercase;
+  margin-top: 14px;
+} 
+
 /* Audio overlay prompt (first-tap-to-play, for browsers blocking autoplay) */
 #audio-prompt {
   position: fixed;
@@ -728,6 +756,14 @@ footer .foot-year {
 </section>
 
 
+<!-- ============== Wedding Hosts ============== -->
+<section id="hosts" class="hosts-section">
+  <div class="hosts-inner">
+    <h2 class="script-title">Той иелері:</h2>
+    <p class="hosts-names">Дидар - Қарлығаш</p>
+  </div>
+</section>
+
 <!-- ============== PROGRAM ============== -->
 <section id="program-section" class="light torn">
   <h2 class="section-title" data-i18n="program_title">Program of the day</h2>
@@ -821,14 +857,14 @@ const CONFIG = {
 
   // -------- PHOTO --------
   // Put the image file next to index.html and write just its filename here.
-  hero_photo: "shers.JPG",
+  hero_photo: "IMG_4836.HEIC",
 
   // -------- VENUE MAP LINK --------
   // Open Google Maps / 2GIS / Yandex Maps, search the venue, share -> copy link.
   venue_map_url: "https://2gis.kz/shymkent/geo/70000001080339461",
 
   // -------- RSVP DESTINATION (Google Sheets) --------
-  sheets_url: "https://script.google.com/macros/s/AKfycbzTk_ryd1w2Y6AwLkKl29kP3tfuiSYE0Oxy-gXbRJb4zVI7IdJLqaQ1ofmeH7KATRXz/exec",
+  sheets_url: "https://script.google.com/macros/s/AKfycbxVvPsEwXXcexxdrbMkbij1Zrw9yppGbOCWkTQ9qY9yepyivGPbTCw_68hGCGMKYxNf/exec",
 
   // -------- WHATSAPP (optional, "" to disable) --------
   whatsapp_number: "",
