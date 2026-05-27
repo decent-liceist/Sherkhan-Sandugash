@@ -636,7 +636,7 @@ footer .foot-year {
 .hosts-oval {
   border: 1.5px solid var(--petal);
   border-radius: 50%;
-  padding: 52px 64px;
+  padding: 52px clamp(28px, 8vw, 64px);
   display: inline-block;
   text-align: center;
   position: relative;
@@ -658,11 +658,12 @@ footer .foot-year {
 
 .hosts-names {
   font-family: 'Cormorant', serif;
-  letter-spacing: 0.28em;
-  font-size: clamp(15px, 4vw, 20px);
+  letter-spacing: 0.15em;
+  font-size: clamp(13px, 3.5vw, 18px);
   color: var(--ink-on-light);
   text-transform: uppercase;
   margin-top: 14px;
+  white-space: nowrap;
 }
 
 .hosts-divider {
@@ -910,7 +911,7 @@ const CONFIG = {
 
   // -------- WEDDING DATE & TIME (used for countdown) --------
   // Format: YYYY-MM-DDTHH:MM:SS  (24-hour, local time)
-  weddingDate: "2026-09-05T18:00:00",
+  weddingDate: "2026-09-05T19:00:00",
 
   // -------- PHOTO --------
   // Put the image file next to index.html and write just its filename here.
@@ -956,8 +957,8 @@ const TRANSLATIONS = {
     dear:               "ҚЫМБАТТЫ",
     greeting_audience:  "АҒАЙЫН-ТУЫС, БАУЫРЛАР, ҚҰДА-ЖЕКЖАТ, НАҒАШЫ-ЖИЕН, БӨЛЕЛЕР, ҚҰРБЫ-ҚҰРДАС, ДОС-ЖАРАНДАР, ҰЖЫМДАСТАР, КӨРШІЛЕР",
     greeting_body:
-      "СІЗДЕРДІ БАЛАЛАРЫМЫЗДЫҢ ҮЙЛЕНУ ТОЙЫНА АРНАЛҒАН САЛТАНАТТЫ АҚ ДАСТАРХАНЫМЫЗДЫҢ ҚАДІРЛІ ҚОНАҒЫ БОЛУҒА ШАҚЫРАМЫЗ" +
-      "БІЗ ҮШІН ЕҢ ҚАУНЫШТЫ КҮНІМІЗДІ СІЗДЕРМЕН БӨЛІСКЕНДІ ҚАЛАЙМЫЗ.",
+      "СІЗДЕРДІ БАЛАЛАРЫМЫЗДЫҢ ҮЙЛЕНУ ТОЙЫНА АРНАЛҒАН САЛТАНАТТЫ АҚ ДАСТАРХАНЫМЫЗДЫҢ ҚАДІРЛІ ҚОНАҒЫ БОЛУҒА ШАҚЫРАМЫЗ. " +
+      "\n БІЗ ҮШІН ЕҢ ҚАУНЫШТЫ КҮНІМІЗДІ СІЗДЕРМЕН БӨЛІСКЕНДІ ҚАЛАЙМЫЗ.",
 
     // photo caption template ({bride} & {groom} will be auto-replaced)
     photo_caption: "{bride}  ·  {groom}",
@@ -976,9 +977,9 @@ const TRANSLATIONS = {
     program_title: "Той бағдарламасы",
     program_sub:   "Мерекелік бағдарлама",
     program: [
-      { time: "17:00", desc: "Қонақтарды қарсы алу" },
-      { time: "18:00", desc: "Той салтанаты" },
-      { time: "19:00", desc: "Кешкі ас, көңіл көтеру" },
+      { time: "18:00", desc: "Қонақтарды қарсы алу" },
+      { time: "19:00", desc: "Той салтанаты" },
+      { time: "19:15", desc: "Кешкі ас, көңіл көтеру" },
     ],
 
     // venue
@@ -1035,9 +1036,9 @@ const TRANSLATIONS = {
     program_title: "Программа дня",
     program_sub:   "План торжества",
     program: [
-      { time: "17:00", desc: "Встреча гостей" },
-      { time: "18:00", desc: "Свадебная церемония" },
-      { time: "19:00", desc: "Ужин и торжество" },
+      { time: "18:00", desc: "Встреча гостей" },
+      { time: "19:00", desc: "Свадебная церемония" },
+      { time: "19:15", desc: "Ужин и торжество" },
     ],
 
     venue_title:   "Место проведения",
@@ -1092,9 +1093,9 @@ const TRANSLATIONS = {
     program_title: "Program of the day",
     program_sub:   "Plan of the celebration",
     program: [
-      { time: "17:00", desc: "Arrival & welcome of guests" },
-      { time: "18:00", desc: "Ceremony" },
-      { time: "19:00", desc: "Reception & dinner" },
+      { time: "18:00", desc: "Arrival & welcome of guests" },
+      { time: "19:00", desc: "Ceremony" },
+      { time: "19:15", desc: "Reception & dinner" },
     ],
 
     venue_title:   "Venue",
