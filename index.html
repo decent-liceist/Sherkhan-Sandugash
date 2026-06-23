@@ -376,6 +376,87 @@ section.dark .greeting strong { color: var(--text-light); font-weight: 600; }
   text-transform: uppercase;
 }
 
+/* ---------- Carousel ---------- */
+.carousel-wrap {
+  max-width: 360px;
+  width: 100%;
+  margin: 34px auto 0;
+}
+.carousel {
+  overflow: hidden;
+  position: relative;
+  padding: 10px;
+  background: var(--paper);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.45);
+}
+.carousel::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(35,38,79,0.25);
+  pointer-events: none;
+}
+.carousel-track {
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+.carousel-track img {
+  width: 100%;
+  flex-shrink: 0;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+}
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+.carousel-btn {
+  background: none;
+  border: 1px solid var(--petal);
+  color: var(--petal);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.carousel-btn:hover {
+  background: var(--petal);
+  color: var(--paper);
+}
+.carousel-dots { display: flex; gap: 8px; }
+.carousel-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--dust-blue);
+  opacity: 0.4;
+  cursor: pointer;
+  transition: opacity 0.2s, background 0.2s;
+}
+.carousel-dot.active {
+  opacity: 1;
+  background: var(--petal);
+}
+.carousel-wrap .tag {
+  margin-top: 14px;
+  font-family: 'Cormorant', serif;
+  letter-spacing: 0.3em;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft-light);
+  text-transform: uppercase;
+  text-align: center;
+}
+
 /* ---------- Countdown ---------- */
 #countdown {
   display: flex;
@@ -789,9 +870,16 @@ footer .foot-year {
     </span>
   </p>
 
-  <!-- Couple photo -->
-  <div class="photo-frame reveal">
-    <img id="hero-photo" alt="The couple" />
+  <!-- Couple photo carousel -->
+  <div class="carousel-wrap reveal">
+    <div class="carousel">
+      <div class="carousel-track" id="carousel-track"></div>
+    </div>
+    <div class="carousel-controls">
+      <button class="carousel-btn" id="carousel-prev">&#8592;</button>
+      <div class="carousel-dots" id="carousel-dots"></div>
+      <button class="carousel-btn" id="carousel-next">&#8594;</button>
+    </div>
     <div class="tag" id="hero-photo-caption"></div>
   </div>
 </section>
@@ -866,7 +954,6 @@ footer .foot-year {
     <input type="text" id="rsvp-phone" data-i18n-placeholder="rsvp_phone" placeholder="Phone (optional)" />
     <div class="rsvp-options">
       <label><input type="radio" name="attend" value="Yes" required /> <span data-i18n="rsvp_yes">Yes, I will be there with joy</span></label>
-      <label><input type="radio" name="attend" value="With partner" /> <span data-i18n="rsvp_partner">Coming with my partner</span></label>
       <label><input type="radio" name="attend" value="No" /> <span data-i18n="rsvp_no">Sadly cannot attend</span></label>
     </div>
     <button type="submit" class="btn-submit" id="rsvp-submit" data-i18n="rsvp_send">Send</button>
@@ -916,6 +1003,10 @@ const CONFIG = {
   // -------- PHOTO --------
   // Put the image file next to index.html and write just its filename here.
   hero_photo: "IMG_7469_2.JPG",
+  // -------- CAROUSEL PHOTOS --------
+  // List all photos for the carousel. Replace filenames with your own.
+  // Put all files next to index.html on GitHub.
+  hero_photos: ["IMG_7469_2.JPG", "DSCF9785.JPG", "DSC_0535.JPG"],
 
   // -------- VENUE MAP LINK --------
   // Open Google Maps / 2GIS / Yandex Maps, search the venue, share -> copy link.
@@ -1136,8 +1227,43 @@ const TRANSLATIONS = {
 document.querySelectorAll('.bride-name').forEach(el => el.textContent = CONFIG.bride);
 document.querySelectorAll('.groom-name').forEach(el => el.textContent = CONFIG.groom);
 
-// ---------- Photo ----------
-document.getElementById('hero-photo').setAttribute('src', CONFIG.hero_photo);
+// ---------- Photo carousel ----------
+(function() {
+  const photos = (CONFIG.hero_photos && CONFIG.hero_photos.length) ? CONFIG.hero_photos : [CONFIG.hero_photo];
+  const track   = document.getElementById('carousel-track');
+  const dotsWrap = document.getElementById('carousel-dots');
+  let current = 0;
+
+  photos.forEach((src, i) => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = 'The couple';
+    track.appendChild(img);
+
+    const dot = document.createElement('div');
+    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(dot);
+  });
+
+  function goTo(n) {
+    current = (n + photos.length) % photos.length;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) =>
+      d.classList.toggle('active', i === current));
+  }
+
+  document.getElementById('carousel-prev').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('carousel-next').addEventListener('click', () => goTo(current + 1));
+
+  // swipe support
+  let startX = 0;
+  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend',   e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+  }, { passive: true });
+})();
 
 // ---------- Venue map button ----------
 document.getElementById('map-btn').href = CONFIG.venue_map_url;
