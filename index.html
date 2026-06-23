@@ -143,7 +143,7 @@ section {
   overflow: hidden;
 }
 
-/* Section headings — wide-spaced serif caps + subtitle, as in the reference */
+/* Section headings — wide-spaced serif caps + subtitle */
 .section-title {
   font-family: 'Cormorant', serif;
   font-weight: 300;
@@ -213,7 +213,6 @@ section.dark .divider.ornament::before,
 section.dark .divider.ornament::after { color: var(--dust-blue); }
 
 /* ---------- Torn-paper white panels ---------- */
-/* A white section with a rough torn top & bottom edge, like the reference */
 .torn {
   background: var(--paper);
   position: relative;
@@ -244,7 +243,6 @@ section.dark .divider.ornament::after { color: var(--dust-blue); }
 }
 
 /* ---------- Hydrangea flower decoration (pure CSS) ---------- */
-/* A cluster of small soft circles forming a hydrangea-like bloom */
 .bloom {
   position: absolute;
   width: 200px;
@@ -486,7 +484,7 @@ section.dark .greeting strong { color: var(--text-light); font-weight: 600; }
   text-transform: uppercase;
 }
 
-/* ---------- Venue ---------- */
+/* ---------- Venue & Time ---------- */
 .venue-card {
   max-width: 480px;
   margin-top: 22px;
@@ -496,8 +494,16 @@ section.dark .greeting strong { color: var(--text-light); font-weight: 600; }
   font-weight: 500;
   font-size: 22px;
   letter-spacing: 0.04em;
-  margin: 12px 0 8px;
+  margin: 12px 0 4px;
   color: var(--text-light);
+}
+.venue-card .time-block {
+  font-family: 'Cormorant', serif;
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: var(--dust-blue);
+  margin-bottom: 8px;
 }
 .venue-card .address {
   color: var(--text-dim);
@@ -652,7 +658,6 @@ footer .foot-year {
   overflow: hidden;
 }
 
-/* scattered dot grid pattern in the background */
 #hosts::before {
   content: '';
   position: absolute;
@@ -662,7 +667,6 @@ footer .foot-year {
   pointer-events: none;
 }
 
-/* thin decorative lines top & bottom inside the section */
 #hosts::after {
   content: '';
   position: absolute;
@@ -723,7 +727,7 @@ footer .foot-year {
   margin: 10px auto 0;
 }
 
-/* Audio overlay prompt (first-tap-to-play, for browsers blocking autoplay) */
+/* Audio overlay prompt */
 #audio-prompt {
   position: fixed;
   inset: 0;
@@ -743,7 +747,7 @@ footer .foot-year {
   max-width: 360px;
   border: 1px solid rgba(174,191,216,0.4);
   padding: 56px 34px;
-  pointer-events: none; /* clicks fall through to the overlay itself */
+  pointer-events: none;
 }
 #audio-prompt .inner h2 {
   font-family: 'Cormorant', serif;
@@ -791,10 +795,8 @@ footer .foot-year {
   </svg>
 </button>
 
-<!-- Audio (configured via JS below) -->
 <audio id="bg-music" loop></audio>
 
-<!-- Prompt shown only if browser blocks autoplay -->
 <div id="audio-prompt">
   <div class="inner">
     <h2 data-i18n="welcome">Welcome</h2>
@@ -806,7 +808,6 @@ footer .foot-year {
 
 <!-- ============== HERO ============== -->
 <section id="hero" class="dark">
-  <!-- hydrangea blooms top corners -->
   <div class="bloom pale tl"></div>
   <div class="bloom tr"></div>
 
@@ -838,7 +839,6 @@ footer .foot-year {
     </span>
   </p>
 
-  <!-- Couple photo carousel -->
   <div class="carousel-wrap reveal">
     <div class="carousel">
       <div class="carousel-track" id="carousel-track"></div>
@@ -879,15 +879,16 @@ footer .foot-year {
 </section>
 
 
-<!-- ============== VENUE ============== -->
+<!-- ============== VENUE & TIME ============== -->
 <section id="venue" class="dark">
   <div class="bloom small bl"></div>
-  <h2 class="section-title" data-i18n="venue_title">Venue</h2>
-  <div class="section-sub" data-i18n="venue_sub">Where to find us</div>
+  <h2 class="section-title" data-i18n="venue_title">Venue & Time</h2>
+  <div class="section-sub" data-i18n="venue_sub">Where & when to find us</div>
   <div class="divider ornament"><span>✦</span></div>
 
   <div class="venue-card reveal">
     <div class="place" data-i18n="venue_name">Kezdesu Restaurant</div>
+    <div class="time-block">18:00</div>
     <div class="address" data-i18n="venue_address">
       Shymkent, Zhidelibaisin street 85
     </div>
@@ -943,97 +944,49 @@ footer .foot-year {
 <!--   CONFIG — EDIT EVERYTHING BELOW TO CUSTOMIZE THE SITE -->
 <!-- ====================================================== -->
 <script id="config">
-// =========================================================
-// CONFIG: things that are the same across all languages
-// (names, files, links, dates)
-// =========================================================
 const CONFIG = {
-
-  // -------- COUPLE --------
   bride: "Sherkhan",
   groom: "Sandugash",
-
-  // -------- WEDDING DATE & TIME (used for countdown) --------
-  // Format: YYYY-MM-DDTHH:MM:SS  (24-hour, local time)
   weddingDate: "2026-09-05T19:00:00",
-
-  // -------- PHOTO --------
-  // Put the image file next to index.html and write just its filename here.
   hero_photo: "IMG_7469_2.JPG",
-  // -------- CAROUSEL PHOTOS --------
-  // List all photos for the carousel. Replace filenames with your own.
-  // Put all files next to index.html on GitHub.
   hero_photos: ["IMG_7469_2.JPG", "DSCF9785.JPG", "DSC_0535.JPG"],
-
-  // -------- VENUE MAP LINK --------
-  // Open Google Maps / 2GIS / Yandex Maps, search the venue, share -> copy link.
   venue_map_url: "https://2gis.kz/shymkent/geo/70000001080339461",
-
-  // -------- RSVP DESTINATION (Google Sheets) --------
   sheets_url: "https://script.google.com/macros/s/AKfycbxVvPsEwXXcexxdrbMkbij1Zrw9yppGbOCWkTQ9qY9yepyivGPbTCw_68hGCGMKYxNf/exec",
-
-  // -------- WHATSAPP (optional, "" to disable) --------
   whatsapp_number: "",
-
-  // -------- MUSIC --------
   music: "korkemim.mp3",
   autoplay: true,
-
-  // -------- DEFAULT LANGUAGE --------
-  // The language shown the first time someone visits.
-  // Options: "kk" (Kazakh), "ru" (Russian), "en" (English)
   default_language: "kk",
 };
 
-
-// =========================================================
-// TRANSLATIONS: all visible text, in three languages.
-// To edit a phrase, change it in ALL THREE blocks (kk, ru, en).
-// =========================================================
 const TRANSLATIONS = {
-
   // -------------------- KAZAKH --------------------
   kk: {
-    // browser tab title
     page_title: "Үйлену тойына шақыру",
-
-    // hero
     hero_eyebrow: "Үйлену тойына шақыру",
     hero_date:    "Сенбі · 05 қыркүйек 2026",
-
-    // greeting
     dear:               "ҚЫМБАТТЫ",
     greeting_audience:  "АҒАЙЫН-ТУЫС, БАУЫРЛАР, ҚҰДА-ЖЕКЖАТ, НАҒАШЫ-ЖИЕН, БӨЛЕЛЕР, ҚҰРБЫ-ҚҰРДАС, ДОС-ЖАРАНДАР, ҰЖЫМДАСТАР, КӨРШІЛЕР",
     greeting_body:
-      "СІЗДЕРДІ БАЛАЛАРЫМЫЗДЫҢ ҮЙЛЕНУ ТОЙЫНА АРНАЛҒАН САЛТАНАТТЫ АҚ ДАСТАРХАНЫМЫЗДЫҢ ҚАДІРЛІ ҚОНАҒЫ БОЛУҒА ШАҚЫРАМЫЗ. " +
-      "БІЗ ЕҢ ҚУАНЫШТЫ КҮНІМІЗДІ СІЗДЕРМЕН БӨЛІСКЕНДІ ҚАЛАЙМЫЗ.",
-
-    // photo caption template ({bride} & {groom} will be auto-replaced)
+      "СІЗДЕРДІ БАЛАЛАРЫМЫЗДЫҢ ҮЙЛЕНУ ТОЙЫНА АРНАЛҒАН САЛТАНАТТЫ АҚ ДАСТАРХАНЫМЫЗДЫҢ ҚАДІРЛІ ҚОНАҒЫ БОЛУҒА ШАҚЫРАМЫЗ. БІЗ ЕҢ ҚУАНЫШТЫ КҮНІМІЗДІ СІЗДЕРМЕН БӨЛІСКЕНДІ ҚАЛАЙМЫЗ.",
     photo_caption: "{bride}  ·  {groom}",
-
-    // countdown
     counting_days: "Тойға дейін",
     days:    "Күн",
     hours:   "Сағат",
     minutes: "Минут",
     seconds: "Секунд",
-
-    // Той иелері
     program_hosts: "Той иелері",
     program_hosts_names: "Дидар - Қарлығаш",
-
-    // venue
-    venue_title:   "Той өтетін орын",
-    venue_sub:     "Той мекенжайы",
+    
+    // Обновленные поля
+    venue_title:   "Өтетін орны мен уақыты",
+    venue_sub:     "Той мекенжайы мен басталуы",
+    
     venue_name:    "Elegant Emirates мейрамханасы",
     venue_address: "Шымкент, Бәйдібек би көшесі 7/17",
     open_map:      "Картадан көру",
-
-    // RSVP
     rsvp_title:     "Қатысуыңызды растаңыз",
     rsvp_sub:       "Қатысатыныңызды растаңыз",
-    rsvp_intro:
-      "Сіздің келе алатыныңызды алдын ала білсек, орындарыңызды дайындай аламыз.",
+    rsvp_intro:     "Сіздің келе алатыныңызды алдын ала білсек, орындарыңызды дайындай аламыз.",
     rsvp_name:      "Атыңыз және тегіңіз",
     rsvp_phone:     "Телефон нөмірі",
     rsvp_yes:       "Қуанышпен қатысамын",
@@ -1043,7 +996,6 @@ const TRANSLATIONS = {
     rsvp_note:      "Жауабыңыз сақталады.",
     rsvp_thanks_1:  "Рақмет! Жауабыңыз қабылданды.",
     rsvp_thanks_2:  "Сіздермен бірге қуануды асыға күтеміз.",
-
     welcome:       "Қош келдіңіз",
     tap_to_enter:  "Шақыруды ашу үшін экранға басыңыз",
     enter:         "Кіру",
@@ -1052,37 +1004,31 @@ const TRANSLATIONS = {
   // -------------------- RUSSIAN --------------------
   ru: {
     page_title: "Свадебное приглашение",
-
     hero_eyebrow: "Свадебное приглашение",
     hero_date:    "Суббота · 05 сентября 2026",
-
     dear:               "Дорогие",
     greeting_audience:  "Родители, родные, друзья и близкие!",
     greeting_body:
-      "С большой радостью приглашаем вас разделить с нами самый счастливый день нашей жизни. " +
-      "Ваше присутствие сделает наш праздник по-настоящему особенным.",
-
+      "С большой радостью приглашаем вас разделить с нами самый счастливый день нашей жизни. Ваше присутствие сделает наш праздник по-настоящему особенным.",
     photo_caption: "{bride}  ·  {groom}",
-
     counting_days: "До свадьбы осталось",
     days:    "Дней",
     hours:   "Часов",
     minutes: "Минут",
     seconds: "Секунд",
-
     program_hosts: "Той иелері",
     program_hosts_names: "Дидар - Қарлығаш",
-
-    venue_title:   "Место проведения",
-    venue_sub:     "Адрес торжества",
+    
+    // Обновленные поля
+    venue_title:   "Место и время проведения",
+    venue_sub:     "Адрес и начало торжества",
+    
     venue_name:    "Ресторан Elegant Emirates",
     venue_address: "Шымкент, ул. Байдибек би 7/17",
     open_map:      "Открыть на карте",
-
     rsvp_title:     "Подтвердите своё присутствие",
     rsvp_sub:       "Анкета гостя",
-    rsvp_intro:
-      "Пожалуйста, сообщите, сможете ли вы быть с нами — чтобы мы могли подготовить для вас особенное место за нашим столом.",
+    rsvp_intro:     "Пожалуйста, сообщите, сможете ли вы быть с нами — чтобы мы могли подготовить для вас особенное место за нашим столом.",
     rsvp_name:      "Ваше имя и фамилия",
     rsvp_phone:     "Телефон",
     rsvp_yes:       "Да, с радостью буду",
@@ -1092,7 +1038,6 @@ const TRANSLATIONS = {
     rsvp_note:      "Ваш ответ будет сохранён.",
     rsvp_thanks_1:  "Спасибо! Ваш ответ принят.",
     rsvp_thanks_2:  "Будем рады встрече с вами.",
-
     welcome:       "Добро пожаловать",
     tap_to_enter:  "Нажмите в любом месте, чтобы открыть приглашение",
     enter:         "Войти",
@@ -1101,37 +1046,31 @@ const TRANSLATIONS = {
   // -------------------- ENGLISH --------------------
   en: {
     page_title: "Wedding Invitation",
-
     hero_eyebrow: "Wedding Invitation",
     hero_date:    "Saturday · 05 September 2026",
-
     dear:               "Dear",
     greeting_audience:  "Family, relatives, friends and beloved guests,",
     greeting_body:
-      "We are delighted to invite you to share in the joy the wedding day of Sherkhan & Sandugash. " +
-      "Your presence will make our celebration truly complete.",
-
+      "We are delighted to invite you to share in the joy the wedding day of Sherkhan & Sandugash. Your presence will make our celebration truly complete.",
     photo_caption: "{bride}  ·  {groom}",
-
     counting_days: "Counting the days",
     days:    "Days",
     hours:   "Hours",
     minutes: "Minutes",
     seconds: "Seconds",
-
     program_hosts: "Wedding Hosts",
     program_hosts_names: "Didar - Karlygash",
-
-    venue_title:   "Venue",
-    venue_sub:     "Where to find us",
+    
+    // Обновленные поля
+    venue_title:   "Venue & Time",
+    venue_sub:     "Where & when to find us",
+    
     venue_name:    "Elegant Emirates Restaurant",
     venue_address: "Shymkent, Beidibek bii street 7/17",
     open_map:      "Open the map",
-
     rsvp_title:     "Kindly RSVP",
     rsvp_sub:       "Confirm your presence",
-    rsvp_intro:
-      "Please let us know if you will be able to join us, so we can prepare a special place for you at our table.",
+    rsvp_intro:     "Please let us know if you will be able to join us, so we can prepare a special place for you at our table.",
     rsvp_name:      "Your full name",
     rsvp_phone:     "Phone",
     rsvp_yes:       "Yes, I will be there with joy",
@@ -1141,7 +1080,6 @@ const TRANSLATIONS = {
     rsvp_note:      "Your response will be saved.",
     rsvp_thanks_1:  "Thank you! Your response has been received.",
     rsvp_thanks_2:  "We look forward to celebrating with you.",
-
     welcome:       "Welcome",
     tap_to_enter:  "Tap anywhere to open the invitation",
     enter:         "Enter",
@@ -1149,16 +1087,11 @@ const TRANSLATIONS = {
 };
 </script>
 
-
-<!-- ====================================================== -->
-<!--   APP LOGIC — you usually don't need to edit below     -->
-<!-- ====================================================== -->
+<!--   APP LOGIC     -->
 <script>
-// ---------- Set bride/groom names everywhere ----------
 document.querySelectorAll('.bride-name').forEach(el => el.textContent = CONFIG.bride);
 document.querySelectorAll('.groom-name').forEach(el => el.textContent = CONFIG.groom);
 
-// ---------- Photo carousel ----------
 (function() {
   const photos = (CONFIG.hero_photos && CONFIG.hero_photos.length) ? CONFIG.hero_photos : [CONFIG.hero_photo];
   const track   = document.getElementById('carousel-track');
@@ -1187,7 +1120,6 @@ document.querySelectorAll('.groom-name').forEach(el => el.textContent = CONFIG.g
   document.getElementById('carousel-prev').addEventListener('click', () => goTo(current - 1));
   document.getElementById('carousel-next').addEventListener('click', () => goTo(current + 1));
 
-  // swipe support
   let startX = 0;
   track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
   track.addEventListener('touchend',   e => {
@@ -1196,10 +1128,8 @@ document.querySelectorAll('.groom-name').forEach(el => el.textContent = CONFIG.g
   }, { passive: true });
 })();
 
-// ---------- Venue map button ----------
 document.getElementById('map-btn').href = CONFIG.venue_map_url;
 
-// ---------- Countdown ----------
 const target = new Date(CONFIG.weddingDate).getTime();
 function tickCountdown() {
   const now = Date.now();
@@ -1216,57 +1146,44 @@ function tickCountdown() {
 tickCountdown();
 setInterval(tickCountdown, 1000);
 
-// ---------- i18n ----------
 const SUPPORTED_LANGS = ['kk', 'ru', 'en'];
 
 function pickInitialLang() {
-  // 1. Saved preference
   const saved = localStorage.getItem('wedding_lang');
   if (saved && SUPPORTED_LANGS.includes(saved)) return saved;
-  // 2. Browser language hint
   const browser = (navigator.language || '').toLowerCase();
   if (browser.startsWith('kk') || browser.startsWith('kz')) return 'kk';
   if (browser.startsWith('ru')) return 'ru';
   if (browser.startsWith('en')) return 'en';
-  // 3. Configured default
-  return SUPPORTED_LANGS.includes(CONFIG.default_language)
-    ? CONFIG.default_language
-    : 'kk';
+  return SUPPORTED_LANGS.includes(CONFIG.default_language) ? CONFIG.default_language : 'kk';
 }
 
 function applyLanguage(lang) {
   if (!TRANSLATIONS[lang]) lang = 'en';
   const t = TRANSLATIONS[lang];
 
-  // Browser title + html lang attr
   document.title = `${CONFIG.bride} & ${CONFIG.groom} — ${t.page_title}`;
   document.documentElement.lang = lang;
 
-  // Text content
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (t[key] !== undefined) el.textContent = t[key];
   });
 
-  // Input placeholders
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const key = el.getAttribute('data-i18n-placeholder');
     if (t[key] !== undefined) el.setAttribute('placeholder', t[key]);
   });
 
-  // Photo caption (with name substitution)
   const captionTpl = t.photo_caption || '{bride}  ·  {groom}';
   document.getElementById('hero-photo-caption').textContent =
     captionTpl.replace('{bride}', CONFIG.bride).replace('{groom}', CONFIG.groom);
 
-  // Active state on switcher buttons
   document.querySelectorAll('#lang-switcher button').forEach(b => {
     b.classList.toggle('active', b.getAttribute('data-lang') === lang);
   });
 
-  // Save preference
   localStorage.setItem('wedding_lang', lang);
-  // Make current lang readable from elsewhere
   window.__currentLang = lang;
 }
 
@@ -1276,13 +1193,11 @@ document.querySelectorAll('#lang-switcher button').forEach(b => {
 
 applyLanguage(pickInitialLang());
 
-// ---------- Reveal animations on scroll ----------
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.15 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-// ---------- Build hydrangea blooms (CSS clusters) ----------
 function buildBloom(el) {
   const W = el.clientWidth || 200;
   const center = W / 2;
@@ -1321,7 +1236,6 @@ window.addEventListener('resize', () => {
   window.__bloomTimer = setTimeout(buildAllBlooms, 250);
 });
 
-// ---------- Falling petals ----------
 (function startPetals() {
   const COUNT = 14;
   for (let i = 0; i < COUNT; i++) {
@@ -1339,7 +1253,6 @@ window.addEventListener('resize', () => {
   }
 })();
 
-// Music
 const audio      = document.getElementById('bg-music');
 const toggle     = document.getElementById('music-toggle');
 const overlay    = document.getElementById('audio-prompt');
@@ -1386,7 +1299,6 @@ toggle.addEventListener('click', (e) => {
   else { audio.pause(); setPlayingUI(false); }
 });
 
-// RSVP -> Google Sheets
 const rsvpForm    = document.getElementById('rsvp-form');
 const rsvpSubmit  = document.getElementById('rsvp-submit');
 const rsvpNote    = document.getElementById('rsvp-note');
