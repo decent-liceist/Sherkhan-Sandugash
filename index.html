@@ -951,7 +951,7 @@ footer .foot-year {
 
   <form class="rsvp-form reveal" id="rsvp-form">
     <input type="text" id="rsvp-name" data-i18n-placeholder="rsvp_name" placeholder="Your full name" required />
-    <input type="text" id="rsvp-phone" data-i18n-placeholder="rsvp_phone" placeholder="Phone (optional)" />
+    <input type="tel" id="rsvp-phone" data-i18n-placeholder="rsvp_phone" placeholder="Phone (optional)" required />
     <div class="rsvp-options">
       <label><input type="radio" name="attend" value="Yes" required /> <span data-i18n="rsvp_yes">Yes, I will be there with joy</span></label>
       <label><input type="radio" name="attend" value="No" /> <span data-i18n="rsvp_no">Sadly cannot attend</span></label>
@@ -1087,7 +1087,7 @@ const TRANSLATIONS = {
     rsvp_intro:
       "Сіздің келе алатыныңызды алдын ала білсек, орындарыңызды дайындай аламыз.",
     rsvp_name:      "Атыңыз және тегіңіз",
-    rsvp_phone:     "Телефон нөмірі (міндетті емес)",
+    rsvp_phone:     "Телефон нөмірі",
     rsvp_yes:       "Қуанышпен қатысамын",
     rsvp_partner:   "Жұбайыммен бірге келемін",
     rsvp_no:        "Өкінішке орай, қатыса алмаймын",
@@ -1145,7 +1145,7 @@ const TRANSLATIONS = {
     rsvp_intro:
       "Пожалуйста, сообщите, сможете ли вы быть с нами — чтобы мы могли подготовить для вас особенное место за нашим столом.",
     rsvp_name:      "Ваше имя и фамилия",
-    rsvp_phone:     "Телефон (необязательно)",
+    rsvp_phone:     "Телефон",
     rsvp_yes:       "Да, с радостью буду",
     rsvp_partner:   "Приду со своей половинкой",
     rsvp_no:        "К сожалению, не смогу",
@@ -1202,7 +1202,7 @@ const TRANSLATIONS = {
     rsvp_intro:
       "Please let us know if you will be able to join us, so we can prepare a special place for you at our table.",
     rsvp_name:      "Your full name",
-    rsvp_phone:     "Phone (optional)",
+    rsvp_phone:     "Phone",
     rsvp_yes:       "Yes, I will be there with joy",
     rsvp_partner:   "Coming with my partner",
     rsvp_no:        "Sadly cannot attend",
