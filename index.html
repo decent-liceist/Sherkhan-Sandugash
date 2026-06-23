@@ -486,36 +486,6 @@ section.dark .greeting strong { color: var(--text-light); font-weight: 600; }
   text-transform: uppercase;
 }
 
-/* ---------- Schedule / Program ---------- */
-.program {
-  display: flex;
-  flex-direction: column;
-  margin-top: 24px;
-  width: 100%;
-  max-width: 420px;
-}
-.program-row {
-  display: grid;
-  grid-template-columns: 90px 1fr;
-  gap: 24px;
-  padding: 18px 0;
-  border-bottom: 1px solid rgba(35,38,79,0.15);
-  align-items: center;
-  text-align: left;
-}
-.program-row:last-child { border-bottom: none; }
-.program-row .time {
-  font-family: 'Cormorant', serif;
-  font-weight: 300;
-  font-size: 28px;
-  color: var(--petal);
-}
-.program-row .desc {
-  font-size: 17px;
-  color: var(--ink-soft-light);
-  line-height: 1.4;
-}
-
 /* ---------- Venue ---------- */
 .venue-card {
   max-width: 480px;
@@ -664,8 +634,6 @@ footer .foot-year {
   section { padding: 78px 20px; }
   .cd-unit { width: 70px; padding: 16px 4px; }
   .cd-unit .num { font-size: 27px; }
-  .program-row { grid-template-columns: 76px 1fr; gap: 16px; }
-  .program-row .time { font-size: 24px; }
   .bloom { width: 130px; height: 130px; }
   .bloom.small { width: 110px; height: 110px; }
   .bloom.tiny { width: 90px; height: 90px; }
@@ -910,17 +878,6 @@ footer .foot-year {
   </div>
 </section>
 
-<!-- ============== PROGRAM ============== -->
-<section id="program-section" class="light torn">
-  <h2 class="section-title" data-i18n="program_title">Program of the day</h2>
-  <div class="section-sub" data-i18n="program_sub">Plan of the celebration</div>
-  <div class="divider ornament"><span>✦</span></div>
-
-  <div class="program reveal" id="program-list">
-    <!-- Filled by JS from translation.program -->
-  </div>
-</section>
-
 
 <!-- ============== VENUE ============== -->
 <section id="venue" class="dark">
@@ -1065,15 +1022,6 @@ const TRANSLATIONS = {
     program_hosts: "Той иелері",
     program_hosts_names: "Дидар - Қарлығаш",
 
-    // program
-    program_title: "Той бағдарламасы",
-    program_sub:   "Мерекелік бағдарлама",
-    program: [
-      { time: "18:00", desc: "Қонақтарды қарсы алу" },
-      { time: "19:00", desc: "Той салтанаты" },
-      { time: "19:15", desc: "Кешкі ас, көңіл көтеру" },
-    ],
-
     // venue
     venue_title:   "Той өтетін орын",
     venue_sub:     "Той мекенжайы",
@@ -1096,7 +1044,6 @@ const TRANSLATIONS = {
     rsvp_thanks_1:  "Рақмет! Жауабыңыз қабылданды.",
     rsvp_thanks_2:  "Сіздермен бірге қуануды асыға күтеміз.",
 
-    // music overlay
     welcome:       "Қош келдіңіз",
     tap_to_enter:  "Шақыруды ашу үшін экранға басыңыз",
     enter:         "Кіру",
@@ -1125,14 +1072,6 @@ const TRANSLATIONS = {
 
     program_hosts: "Той иелері",
     program_hosts_names: "Дидар - Қарлығаш",
-
-    program_title: "Программа дня",
-    program_sub:   "План торжества",
-    program: [
-      { time: "18:00", desc: "Встреча гостей" },
-      { time: "19:00", desc: "Свадебная церемония" },
-      { time: "19:15", desc: "Ужин и торжество" },
-    ],
 
     venue_title:   "Место проведения",
     venue_sub:     "Адрес торжества",
@@ -1182,14 +1121,6 @@ const TRANSLATIONS = {
 
     program_hosts: "Wedding Hosts",
     program_hosts_names: "Didar - Karlygash",
-
-    program_title: "Program of the day",
-    program_sub:   "Plan of the celebration",
-    program: [
-      { time: "18:00", desc: "Arrival & welcome of guests" },
-      { time: "19:00", desc: "Ceremony" },
-      { time: "19:15", desc: "Reception & dinner" },
-    ],
 
     venue_title:   "Venue",
     venue_sub:     "Where to find us",
@@ -1328,16 +1259,6 @@ function applyLanguage(lang) {
   document.getElementById('hero-photo-caption').textContent =
     captionTpl.replace('{bride}', CONFIG.bride).replace('{groom}', CONFIG.groom);
 
-  // Program rows (re-render)
-  const programEl = document.getElementById('program-list');
-  programEl.innerHTML = '';
-  (t.program || []).forEach(item => {
-    const row = document.createElement('div');
-    row.className = 'program-row';
-    row.innerHTML = `<div class="time">${item.time}</div><div class="desc">${item.desc}</div>`;
-    programEl.appendChild(row);
-  });
-
   // Active state on switcher buttons
   document.querySelectorAll('#lang-switcher button').forEach(b => {
     b.classList.toggle('active', b.getAttribute('data-lang') === lang);
@@ -1362,12 +1283,9 @@ const io = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 // ---------- Build hydrangea blooms (CSS clusters) ----------
-// Each .bloom gets a cluster of small teardrop "petals" arranged in rings,
-// approximating a hydrangea flower head without needing image files.
 function buildBloom(el) {
   const W = el.clientWidth || 200;
   const center = W / 2;
-  // ring definitions: [radius fraction, count, dot size fraction]
   const rings = [
     [0.00, 1,  0.30],
     [0.20, 6,  0.26],
@@ -1386,7 +1304,6 @@ function buildBloom(el) {
       dot.style.left = (center + Math.cos(ang) * radius - size / 2) + 'px';
       dot.style.top  = (center + Math.sin(ang) * radius - size / 2) + 'px';
       dot.style.transform = `rotate(${ang + Math.PI/4}rad)`;
-      // slight variation in tone
       dot.style.filter = `brightness(${0.9 + Math.random() * 0.3})`;
       el.appendChild(dot);
     }
@@ -1411,12 +1328,11 @@ window.addEventListener('resize', () => {
     const p = document.createElement('div');
     p.className = 'petal-fall';
     p.style.left = Math.random() * 100 + 'vw';
-    const dur = 9 + Math.random() * 11;          // 9-20s
+    const dur = 9 + Math.random() * 11;
     p.style.animationDuration = dur + 's';
     p.style.animationDelay = -(Math.random() * dur) + 's';
     const scale = 0.6 + Math.random() * 0.9;
     p.style.transform = `scale(${scale})`;
-    // alternate between light and mid blue petals
     if (i % 3 === 0) p.style.background = 'var(--petal)';
     p.style.opacity = (0.4 + Math.random() * 0.4).toFixed(2);
     document.body.appendChild(p);
@@ -1426,7 +1342,7 @@ window.addEventListener('resize', () => {
 // Music
 const audio      = document.getElementById('bg-music');
 const toggle     = document.getElementById('music-toggle');
-const overlay    = document.getElementById('audio-prompt');   // renamed: 'prompt' is a reserved browser global
+const overlay    = document.getElementById('audio-prompt');
 audio.src        = CONFIG.music;
 audio.preload    = 'auto';
 let userStarted  = false;
@@ -1440,10 +1356,9 @@ function tryPlay() {
   if (p && typeof p.then === 'function') {
     return p.then(
       () => { setPlayingUI(true); hideOverlay(); userStarted = true; },
-      () => { /* blocked — overlay stays so user can tap */ }
+      () => {}
     );
   }
-  // Older browsers: play() returned undefined
   setPlayingUI(true); hideOverlay(); userStarted = true;
   return Promise.resolve();
 }
@@ -1451,14 +1366,10 @@ function tryPlay() {
 function hideOverlay() { overlay.classList.remove('show'); }
 
 if (CONFIG.autoplay) {
-  // Try silent autoplay first
   tryPlay();
-  // If still paused after a moment, show overlay so user can start it
   setTimeout(() => { if (audio.paused) overlay.classList.add('show'); }, 500);
 }
 
-// ANY interaction anywhere on the page will start playback.
-// This is the most reliable way to satisfy browser autoplay rules.
 function firstInteractionPlay() {
   if (userStarted || !audio.paused) return;
   tryPlay();
@@ -1467,17 +1378,15 @@ function firstInteractionPlay() {
   document.addEventListener(evt, firstInteractionPlay, { once: false, passive: true });
 });
 
-// Explicit clicks on the overlay (anywhere inside it)
 overlay.addEventListener('click', () => { tryPlay(); hideOverlay(); });
 
-// Play/pause button
 toggle.addEventListener('click', (e) => {
   e.stopPropagation();
   if (audio.paused) tryPlay();
   else { audio.pause(); setPlayingUI(false); }
 });
 
-// RSVP -> Google Sheets (+ optional WhatsApp)
+// RSVP -> Google Sheets
 const rsvpForm    = document.getElementById('rsvp-form');
 const rsvpSubmit  = document.getElementById('rsvp-submit');
 const rsvpNote    = document.getElementById('rsvp-note');
@@ -1494,12 +1403,8 @@ rsvpForm.addEventListener('submit', async (e) => {
   rsvpSubmit.disabled    = true;
   rsvpSubmit.textContent = lang === 'kk' ? 'Жіберілуде...' : lang === 'ru' ? 'Отправка...' : 'Sending...';
 
-  // 1. Send to Google Sheets (if configured)
   if (CONFIG.sheets_url) {
     try {
-      // We use 'no-cors' + URL-encoded body so the Apps Script accepts it
-      // without us needing to fight CORS. The trade-off: we can't read the
-      // response, but for a one-way write that's fine.
       const body = new URLSearchParams({
         name, phone, attend: choice,
         language:  lang,
@@ -1515,7 +1420,6 @@ rsvpForm.addEventListener('submit', async (e) => {
     }
   }
 
-  // 2. Optional WhatsApp notification
   if (CONFIG.whatsapp_number) {
     const text = `Hello! RSVP for ${CONFIG.bride} & ${CONFIG.groom}:%0A` +
                  `Name: ${encodeURIComponent(name)}%0A` +
@@ -1524,7 +1428,6 @@ rsvpForm.addEventListener('submit', async (e) => {
     window.open(`https://wa.me/${CONFIG.whatsapp_number}?text=${text}`, '_blank');
   }
 
-  // 3. Show thank-you
   rsvpForm.style.display = 'none';
   rsvpSuccess.style.display = 'block';
   rsvpSuccess.classList.add('visible');
