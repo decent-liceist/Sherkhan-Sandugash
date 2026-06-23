@@ -42,6 +42,7 @@
   --text-light:  #e8eaf6;   /* text on navy */
   --text-dim:    #9aa0c8;   /* muted text on navy */
   --line:        rgba(174,191,216,0.35);
+  --accent-red:  #bd4b4b;   /* красный акцент для календаря */
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -455,6 +456,81 @@ section.dark .greeting strong { color: var(--text-light); font-weight: 600; }
   text-align: center;
 }
 
+/* ---------- Calendar Visualization ---------- */
+.calendar-container {
+  max-width: 320px;
+  width: 100%;
+  margin: 40px auto 0;
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--ink-on-light);
+}
+.calendar-month {
+  font-family: 'Cormorant', serif;
+  font-size: 24px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 16px;
+  color: var(--ink-on-light);
+}
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  row-gap: 10px;
+  column-gap: 4px;
+  text-align: center;
+  font-size: 16px;
+}
+.cal-week-lbl {
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  color: var(--petal);
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+.cal-day {
+  padding: 4px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-weight: 400;
+}
+.cal-day.empty { visibility: hidden; }
+/* Обводка свадебного дня нежным красным цветом */
+.cal-day.wedding-day {
+  font-weight: 600;
+  color: var(--accent-red);
+}
+.cal-day.wedding-day::after {
+  content: '';
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--accent-red);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 4px rgba(189, 75, 75, 0.2);
+}
+.calendar-time-info {
+  margin-top: 24px;
+  font-family: 'Cormorant', serif;
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-on-light);
+}
+.calendar-time-info .time-lbl {
+  font-size: 22px;
+  font-weight: 600;
+  display: block;
+  margin-top: 4px;
+  color: var(--petal);
+}
+
 /* ---------- Countdown ---------- */
 #countdown {
   display: flex;
@@ -850,6 +926,64 @@ footer .foot-year {
     </div>
     <div class="tag" id="hero-photo-caption"></div>
   </div>
+
+  <!-- Визуализация календаря -->
+  <div class="calendar-container reveal">
+    <div class="calendar-month" data-i18n="cal_month">Сентябрь 2026</div>
+    <div class="calendar-grid">
+      <!-- Заголовки дней недели -->
+      <div class="cal-week-lbl" data-i18n="cal_mo">Пн</div>
+      <div class="cal-week-lbl" data-i18n="cal_tu">Вт</div>
+      <div class="cal-week-lbl" data-i18n="cal_we">Ср</div>
+      <div class="cal-week-lbl" data-i18n="cal_th">Чт</div>
+      <div class="cal-week-lbl" data-i18n="cal_fr">Пт</div>
+      <div class="cal-week-lbl" data-i18n="cal_sa">Сб</div>
+      <div class="cal-week-lbl" data-i18n="cal_su">Вс</div>
+
+      <!-- Календарная сетка на сентябрь 2026 (1-е число — вторник, значит 1 пустая ячейка) -->
+      <div class="cal-day empty"></div>
+      <div class="cal-day">1</div>
+      <div class="cal-day">2</div>
+      <div class="cal-day">3</div>
+      <div class="cal-day">4</div>
+      <div class="cal-day wedding-day">5</div> <!-- День свадьбы, обведенный красным кругом -->
+      <div class="cal-day">6</div>
+      
+      <div class="cal-day">7</div>
+      <div class="cal-day">8</div>
+      <div class="cal-day">9</div>
+      <div class="cal-day">10</div>
+      <div class="cal-day">11</div>
+      <div class="cal-day">12</div>
+      <div class="cal-day">13</div>
+      
+      <div class="cal-day">14</div>
+      <div class="cal-day">15</div>
+      <div class="cal-day">16</div>
+      <div class="cal-day">17</div>
+      <div class="cal-day">18</div>
+      <div class="cal-day">19</div>
+      <div class="cal-day">20</div>
+      
+      <div class="cal-day">21</div>
+      <div class="cal-day">22</div>
+      <div class="cal-day">23</div>
+      <div class="cal-day">24</div>
+      <div class="cal-day">25</div>
+      <div class="cal-day">26</div>
+      <div class="cal-day">27</div>
+      
+      <div class="cal-day">28</div>
+      <div class="cal-day">29</div>
+      <div class="cal-day">30</div>
+    </div>
+    
+    <!-- Рядом стоящая информация о времени -->
+    <div class="calendar-time-info">
+      <span data-i18n="cal_time_day">Суббота</span>
+      <span class="time-lbl">18:00</span>
+    </div>
+  </div>
 </section>
 
 <!-- ============== COUNTDOWN ============== -->
@@ -947,7 +1081,7 @@ footer .foot-year {
 const CONFIG = {
   bride: "Sherkhan",
   groom: "Sandugash",
-  weddingDate: "2026-09-05T19:00:00",
+  weddingDate: "2026-09-05T18:00:00",
   hero_photo: "IMG_7469_2.JPG",
   hero_photos: ["IMG_7469_2.JPG", "DSCF9785.JPG", "DSC_0535.JPG"],
   venue_map_url: "https://2gis.kz/shymkent/geo/70000001080339461",
@@ -977,10 +1111,13 @@ const TRANSLATIONS = {
     program_hosts: "Той иелері",
     program_hosts_names: "Дидар - Қарлығаш",
     
-    // Обновленные поля
+    // Календарь
+    cal_month: "Қыркүйек 2026",
+    cal_mo: "Дс", cal_tu: "Сс", cal_we: "Ср", cal_th: "Бс", cal_fr: "Жм", cal_sa: "Сб", cal_su: "Жс",
+    cal_time_day: "Сенбі",
+
     venue_title:   "Өтетін орны мен уақыты",
     venue_sub:     "Той мекенжайы мен басталуы",
-    
     venue_name:    "Elegant Emirates мейрамханасы",
     venue_address: "Шымкент, Бәйдібек би көшесі 7/17",
     open_map:      "Картадан көру",
@@ -1019,10 +1156,13 @@ const TRANSLATIONS = {
     program_hosts: "Той иелері",
     program_hosts_names: "Дидар - Қарлығаш",
     
-    // Обновленные поля
+    // Календарь
+    cal_month: "Сентябрь 2026",
+    cal_mo: "Пн", cal_tu: "Вт", cal_we: "Ср", cal_th: "Чт", cal_fr: "Пт", cal_sa: "Сб", cal_su: "Вс",
+    cal_time_day: "Суббота",
+
     venue_title:   "Место и время проведения",
     venue_sub:     "Адрес и начало торжества",
-    
     venue_name:    "Ресторан Elegant Emirates",
     venue_address: "Шымкент, ул. Байдибек би 7/17",
     open_map:      "Открыть на карте",
@@ -1061,10 +1201,13 @@ const TRANSLATIONS = {
     program_hosts: "Wedding Hosts",
     program_hosts_names: "Didar - Karlygash",
     
-    // Обновленные поля
+    // Calendar
+    cal_month: "September 2026",
+    cal_mo: "Mo", cal_tu: "Tu", cal_we: "We", cal_th: "Th", cal_fr: "Fr", cal_sa: "Sa", cal_su: "Su",
+    cal_time_day: "Saturday",
+
     venue_title:   "Venue & Time",
     venue_sub:     "Where & when to find us",
-    
     venue_name:    "Elegant Emirates Restaurant",
     venue_address: "Shymkent, Beidibek bii street 7/17",
     open_map:      "Open the map",
